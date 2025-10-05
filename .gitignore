@@ -207,6 +207,6 @@ marimo/_lsp/
 __marimo__/
 
 # Large data file
-data/mobile_money_log.csv
-data/mobile_money_log.zip
+# data/mobile_money_log.csv
+# data/mobile_money_log.zip
 
