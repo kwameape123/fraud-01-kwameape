@@ -119,12 +119,13 @@ PyQt6; sys_platform != "win32"
 # Supports Kafka 3.5+ with KRaft mode (no ZooKeeper required)
 six
 kafka-python-ng
+kafka
 
 # ======================================================
 # DATABASE INTEGRATION 
 # ======================================================
 
-sqlite3
+# sqlite3
 # - Most popular and accessible: included in Python Std Lib.
 # - Great for beginners, small projects, and teaching.
 # - No install required.
@@ -133,7 +134,7 @@ sqlite3
 # - Growing rapidly in popularity for analytics.
 # - In-process OLAP engine (no server needed).
 # - Super easy to install (just one package).
-duckdb
+# duckdb
 
 # pyarrow
 # - For Apache Arrow/Parquet support.
