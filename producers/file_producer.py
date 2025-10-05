@@ -88,7 +88,7 @@ def main(fast_mode=False):
         sys.exit(1)
 
     try:
-        with open(uc.JSON_FILE, "w", encoding="utf-8") as json_file:
+        with open(uc.JSON_FILE, "a", encoding="utf-8") as json_file:
             for message in generate_message():
                 logger.info(f"{message}")
                 json.dump(message, json_file, default=str)
