@@ -1,5 +1,5 @@
 """
-Consumer that reads JSON messages from the producer in real-time
+This consumer reads JSON messages from mobile_money_transaction_live.json in real-time
 and updates live visualizations:
 1. Transaction counts by type
 2. Fraud counts
@@ -17,7 +17,7 @@ from utils.utils_logger import logger
 import utils.utils_config as uc
 
 #####################################
-# Data Structures
+# DATA STRUCTURES
 #####################################
 
 transaction_type_counts = defaultdict(int)
@@ -28,7 +28,7 @@ hourly_amounts = defaultdict(float)
 hourly_revenue = defaultdict(float)  # 2% of hourly sum
 
 #####################################
-# Setup live plot
+# SETUP LIVE PLOT
 #####################################
 
 plt.ion()
@@ -36,7 +36,7 @@ fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
 
 def update_chart():
     """Update all charts with the latest data."""
-    # --- Transaction type counts ---
+    # Transaction type counts
     ax1.clear()
     types = list(transaction_type_counts.keys())
     counts = list(transaction_type_counts.values())
@@ -46,7 +46,7 @@ def update_chart():
     ax1.set_xticks(range(len(types)))
     ax1.set_xticklabels(types, rotation=45, ha="right")
 
-    # --- Fraud counts ---
+    # Fraud counts
     ax2.clear()
     fraud_labels = list(fraud_counts.keys())
     fraud_values = list(fraud_counts.values())
@@ -56,7 +56,7 @@ def update_chart():
     ax2.set_xticks(range(len(fraud_labels)))
     ax2.set_xticklabels(fraud_labels, rotation=0)
 
-    # --- Hourly amounts ---
+    # Hourly amounts
     ax3.clear()
     if hourly_amounts:
         hours = sorted(hourly_amounts.keys())
@@ -69,7 +69,7 @@ def update_chart():
         ax3.legend()
         plt.setp(ax3.get_xticklabels(), rotation=45, ha="right")
 
-    # --- Hourly revenue (2%) ---
+    # Hourly revenue (2%)
     ax4.clear()
     if hourly_revenue:
         hours = sorted(hourly_revenue.keys())
@@ -87,22 +87,22 @@ def update_chart():
     plt.pause(0.01)
 
 #####################################
-# Process Message
+# PROCESS MESSAGE
 #####################################
 
 def process_message(message: str):
     try:
         message_dict = json.loads(message)
 
-        # --- Transaction type counts ---
+        # Transaction type counts
         tx_type = message_dict.get("type_transaction", "unknown")
         transaction_type_counts[tx_type] += 1
 
-        # --- Fraud counts ---
+        # Fraud counts
         fraud = "Fraud" if message_dict.get("isFraud", 0) else "Legit"
         fraud_counts[fraud] += 1
 
-        # --- Hourly amounts and revenue ---
+        # Hourly amounts and revenue
         tx_time = message_dict.get("transaction_time")
         if tx_time:
             # Parse datetime (assumes string in ISO format)
@@ -123,21 +123,21 @@ def process_message(message: str):
         logger.error(f"Error processing message: {e}")
 
 #####################################
-# Tail-like function for real-time reading
+# TAIL-LIKE FUNCTION
 #####################################
 
 def tail_f(file):
     """Yield new lines as they are written to the file."""
     file.seek(0, os.SEEK_END)  # Start at the end
     while True:
-        line = file.readline()
-        if not line:
+        message = file.readline()
+        if not message:
             time.sleep(0.5)
             continue
-        yield line
+        yield message
 
 #####################################
-# Main Loop
+# MAIN LOOP
 #####################################
 
 def main():
@@ -153,14 +153,14 @@ def main():
         try:
             with open(uc.JSON_FILE, "r", encoding="utf-8") as f:
     # Process all existing messages first
-                for line in f:
-                    if line.strip():
-                        process_message(line)
+                for message in f:
+                    if message.strip():
+                        process_message(message)
     
     # Then tail for new messages
-                for line in tail_f(f):
-                    if line.strip():
-                        process_message(line)
+                for message in tail_f(f):
+                    if message.strip():
+                        process_message(message)
         except KeyboardInterrupt:
             logger.info("Consumer stopped by user")
         finally:
@@ -168,7 +168,7 @@ def main():
             plt.show()
 
 #####################################
-# Entry Point
+# MODULE EXECUTION FUNCTION
 #####################################
 
 if __name__ == "__main__":

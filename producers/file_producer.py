@@ -13,6 +13,7 @@ import sys
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
+import os
 
 import utils.utils_config as uc
 from utils.utils_logger import logger
@@ -88,11 +89,13 @@ def main(fast_mode=False):
         sys.exit(1)
 
     try:
-        with open(uc.JSON_FILE, "a", encoding="utf-8") as json_file:
+        with open(uc.JSON_FILE, "a", encoding="utf-8",buffering=1) as json_file:
             for message in generate_message():
                 logger.info(f"{message}")
                 json.dump(message, json_file, default=str)
                 json_file.write("\n")
+                json_file.flush()
+                os.fsync(json_file.fileno())
                 
                 if not fast_mode:
                     time.sleep(uc.get_message_interval_in_seconds())

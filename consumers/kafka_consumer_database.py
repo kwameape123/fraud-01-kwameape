@@ -1,15 +1,25 @@
+"""kafka_consumer_database.py
+This python module reads data from kafka topic and 
+then push a refined version of the transaction to a database in postgreSQL.
+Fiels sent to database include;
+1. Type of transaction.
+2. Transaction amount.
+3. An indicator if the transaction was fraud.
+4. Transaction time."""
+################
+# IMPORTS
+#################
 import json
 import os
 from datetime import datetime
-
 import psycopg2
 from kafka import KafkaConsumer
 from utils.utils_logger import logger
 import utils.utils_config as uc
 
-#####################################
-# Database Setup
-#####################################
+##################
+# DATABASE SETUP
+##################
 
 pg_config = uc.get_postgres_config()
 
@@ -22,7 +32,9 @@ CREATE TABLE IF NOT EXISTS transactions (
     transaction_time TIMESTAMP
 )
 """
-
+#####################################
+# INITIALIZE DATABASE
+#####################################
 def init_db():
     conn = psycopg2.connect(**pg_config)
     with conn:
@@ -31,7 +43,7 @@ def init_db():
     return conn
 
 #####################################
-# Process Message
+# PROCESS MESSAGE
 #####################################
 
 def process_message(conn, message: str):
@@ -61,7 +73,7 @@ def process_message(conn, message: str):
         logger.error(f"Error processing message: {e}")
 
 #####################################
-# Main Loop with kafka-python
+# MAIN LOOP
 #####################################
 
 def main():
@@ -82,8 +94,8 @@ def main():
     )
 
     try:
-        for msg in consumer:
-            process_message(conn, msg.value)
+        for message in consumer:
+            process_message(conn, message.value)
 
     except KeyboardInterrupt:
         logger.info("Consumer stopped by user")
@@ -92,7 +104,7 @@ def main():
         conn.close()
 
 #####################################
-# Entry Point
+# MODULE EXECUTION POINT
 #####################################
 
 if __name__ == "__main__":

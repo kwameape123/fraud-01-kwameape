@@ -1,11 +1,13 @@
-"""
-Kafka consumer for mobile money transactions.
-Reads messages in real-time and updates live visualizations:
+""" kafka_consumer_visualization.py
+This consumer reads JSON messages from kafka topic in real-time
+and updates live visualizations:
 1. Transaction counts by type
 2. Fraud counts
-3. Hourly transaction amounts
-4. Hourly revenue (2%)
+3. Hourly transaction amounts and revenue (2%)
 """
+#####################################
+# IMPORTS
+#####################################
 
 import json
 from collections import defaultdict
@@ -16,7 +18,7 @@ from utils.utils_logger import logger
 import utils.utils_config as uc
 
 #####################################
-# Data Structures
+# DATA STRUCTURES
 #####################################
 
 transaction_type_counts = defaultdict(int)
@@ -25,7 +27,7 @@ hourly_amounts = defaultdict(float)
 hourly_revenue = defaultdict(float)
 
 #####################################
-# Setup live plots
+# SETUP LIVE PLOTS
 #####################################
 
 plt.ion()
@@ -33,7 +35,7 @@ fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
 
 def update_chart():
     """Update all charts with the latest data."""
-    # --- Transaction type counts ---
+    # Transaction type counts
     ax1.clear()
     types = list(transaction_type_counts.keys())
     counts = list(transaction_type_counts.values())
@@ -42,7 +44,7 @@ def update_chart():
     ax1.set_ylabel("Counts")
     ax1.set_xticklabels(types, rotation=45, ha="right")
 
-    # --- Fraud counts ---
+    # Fraud counts
     ax2.clear()
     fraud_labels = list(fraud_counts.keys())
     fraud_values = list(fraud_counts.values())
@@ -51,7 +53,7 @@ def update_chart():
     ax2.set_ylabel("Counts")
     ax2.set_xticklabels(fraud_labels, rotation=0)
 
-    # --- Hourly amounts ---
+    # Hourly amounts
     ax3.clear()
     if hourly_amounts:
         hours = sorted(hourly_amounts.keys())
@@ -64,7 +66,7 @@ def update_chart():
         ax3.legend()
         ax3.tick_params(axis='x', rotation=45)
 
-    # --- Hourly revenue ---
+    # Hourly revenue
     ax4.clear()
     if hourly_revenue:
         hours = sorted(hourly_revenue.keys())
@@ -82,7 +84,7 @@ def update_chart():
     plt.pause(0.01)
 
 #####################################
-# Process message
+# PROCESS MESSAGE
 #####################################
 
 def process_message(message_dict):
@@ -118,19 +120,19 @@ def main():
     logger.info("Starting Kafka transaction consumer")
 
     consumer = KafkaConsumer(
-        uc.get_kafka_topic(),               # topic name
-        bootstrap_servers=uc.KAFKA_BROKER, # e.g., 'localhost:9092'
+        uc.get_kafka_topic(),
+        bootstrap_servers=uc.get_bootstrapserver_address(),
         auto_offset_reset='latest',
         enable_auto_commit=True,
-        group_id='transaction_consumer_group',
+        group_id=uc.kafka_consumer_group_id(),
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
 
     print("Kafka consumer ready, waiting for messages...")
 
     try:
-        for msg in consumer:
-            process_message(msg.value)
+        for message in consumer:
+            process_message(message.value)
 
     except KeyboardInterrupt:
         logger.info("Consumer stopped by user")
@@ -140,7 +142,7 @@ def main():
         consumer.close()
 
 #####################################
-# Entry point
+# MODULE EXECUTION POINT
 #####################################
 
 if __name__ == "__main__":

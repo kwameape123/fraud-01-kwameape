@@ -96,9 +96,16 @@ def get_postgres_config():
         "user": os.getenv("POSTGRES_USER"),
         "password": os.getenv("POSTGRES_PASSWORD"),
         "host": os.getenv("POSTGRES_HOST"),
-        "port": int(os.getenv("POSTGRES", 5432))
+        "port": int(os.getenv("POSTGRES_PORT", 5432))
     }
     return pg_config
+
+# Twilio Credentials
+TWILIO_SID = "your_twilio_account_sid"
+TWILIO_AUTH_TOKEN = "your_twilio_auth_token"
+TWILIO_PHONE = "+1234567890"  # Twilio-provided phone number
+ALERT_PHONE = "+16824125975"   # Your phone number for alerts
+
 
 
 
