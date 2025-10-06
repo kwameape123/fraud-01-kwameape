@@ -50,10 +50,11 @@ Make sure the script is executable.
 Run the shell script to set up Kafka.
 Cd (change directory) to the kafka directory.
 Start the Kafka server in the foreground. Keep this terminal open - Kafka will run here.
-```chmod +x scripts/prepare_kafka.sh```
-```scripts/prepare_kafka.sh```
-```cd ~/kafka```
-```bin/kafka-server-start.sh config/kraft/server.properties```
+```chmod +x scripts/prepare_kafka.sh
+scripts/prepare_kafka.sh
+cd ~/kafka
+bin/kafka-server-start.sh config/kraft/server.properties
+```
 Keep this terminal open! Kafka is running and needs to stay active.
 
 ### STEP 5: Manage Local Project Virtual Environment
