@@ -19,7 +19,7 @@ a PostgreSQL database.
 4. Configuration files that configure producers and consumers. These can be found in the utils folder and the .env or .env.example file. Note that some environment variables in the .env or .env.example needs to be customize to your specific situation, meaning a unique database, username and password for PostgreSQL.
 5. A logger that helps to keep track of errors and how project modules function.
 
-**CSV data file was too large to be upload to GitHub via git, hence a link to download this file is https://www.kaggle.com/datasets/ealaxi/paysim1/data**
+**CSV data file can be downloaded at https://www.kaggle.com/datasets/ealaxi/paysim1/data**
 After downloading the data file from kaggle, make sure the name is **mobile_money_log.csv** to be consistent with the naming convention in the code.
 
 
@@ -31,7 +31,8 @@ In brackets are links to installation instructions for the various tools.
 2. Python. Python 3.11 is required (https://www.geeksforgeeks.org/python/how-to-install-python-on-windows/)
 (https://www.geeksforgeeks.org/python/download-and-install-python-3-latest-version/).
 3. Wsl and Kafka (https://learn.microsoft.com/en-us/windows/wsl/install).
-4. PostgreSQL (https://www.postgresql.org/docs/current/tutorial-install.html).
+4. PostgreSQL (https://www.postgresql.org/docs/current/tutorial-install.html). Sensitive information for PostgreSQL such as username and password cannot be shared. To implement this project, create a personal database with a unique username and password, then assign them to the right environment variables in the .env.example(.env when running project) file. Also ensure that the created PostgreSQL database is running using pgadmin 4.
+5. Pgadmin 4 (refer to how_to.txt).
 
 
 
@@ -57,8 +58,8 @@ Make sure the script is executable.
 Run the shell script to set up Kafka.
 Cd (change directory) to the kafka directory.
 Start the Kafka server in the foreground. Keep this terminal open - Kafka will run here.
-```chmod +x scripts/prepare_kafka.sh
-scripts/prepare_kafka.sh
+```chmod +x scripts/prep_kafka.sh
+scripts/prep_kafka.sh
 cd ~/kafka
 bin/kafka-server-start.sh config/kraft/server.properties
 ```
