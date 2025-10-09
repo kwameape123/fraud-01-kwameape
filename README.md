@@ -20,7 +20,7 @@ a PostgreSQL database.
 5. A logger that helps to keep track of errors and how project modules function.
 
 **CSV data file can be downloaded at https://www.kaggle.com/datasets/ealaxi/paysim1/data**
-After downloading the data file from kaggle, make sure the name is **mobile_money_log.csv** to be consistent with the naming convention in the code.
+After downloading the data file from kaggle, make sure the name is **mobile_money_log.csv** to be consistent with the naming convention in the code and then add to the data folder.
 
 
 ## Project Execution.
@@ -32,7 +32,7 @@ In brackets are links to installation instructions for the various tools.
 (https://www.geeksforgeeks.org/python/download-and-install-python-3-latest-version/).
 3. Wsl and Kafka (https://learn.microsoft.com/en-us/windows/wsl/install).
 4. PostgreSQL (https://www.postgresql.org/docs/current/tutorial-install.html). Sensitive information for PostgreSQL such as username and password cannot be shared. To implement this project, create a personal database with a unique username and password, then assign them to the right environment variables in the .env.example(.env when running project) file. Also ensure that the created PostgreSQL database is running using pgadmin 4.
-5. Pgadmin 4 (refer to how_to.txt).
+5. Pgadmin 4 (refer to how_to.txt). Note that PostgreSQL database must be opened and running when running the database consumers.
 
 
 
