@@ -168,5 +168,5 @@ psycopg2
 matplotlib
 # for visualization
 
-dc-texter
+dc-mailer
 # for text alerts.

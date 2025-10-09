@@ -15,7 +15,6 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from utils.utils_logger import logger
 import utils.utils_config as uc
-from dc_texter import send_text
 from dc_mailer import send_mail
 
 
@@ -100,28 +99,20 @@ def process_message(message: str):
         logger.error(f"Invalid JSON message:{message}")
 
     account_number = message_dict.get("nameOrig")
-    alert_message =f"Fraud detected for account {account_number}"
 
     title = "Mobile Money Fraud Alert"
     content = f"Fraud has been detected for account:{account_number}"
-    recipient = "arnold.k.atchoe@gmail.com"
+    recipient = uc.get_email_recipient()
 
+    # Email Alert system
     try:
         send_mail(subject=title, body=content, recipient=recipient)
         print("SUCCESS: Email sent.")
     except RuntimeError as e:
         print(f"ERROR: Sending failed: {e}")
 
-    """  if message_dict.get("isFraud")==1:
-
-        try:
-            send_text(body=alert_message)
-            logger.info(f"SUCCESS. Text sent: {message}")
-        except RuntimeError as e:
-            logger.warning(f"ERROR:  Sending failed: {e}")"""
-
     try:
-        message_dict = json.loads(message)
+        # message_dict = json.loads(message)
 
         # Transaction type counts
         tx_type = message_dict.get("type_transaction", "unknown")

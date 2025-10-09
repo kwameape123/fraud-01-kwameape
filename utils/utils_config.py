@@ -19,6 +19,8 @@ load_dotenv()
 ############################
 # KAFKA CONFIGURATIONS
 ############################
+"""This module is to get information of enviroment variables in .env.
+The function names indicate the related environmental variables."""
 
 def get_bootstrapserver_address()-> str:
     address = os.getenv('KAFKA_BROKER_ADDRESS','localhost:9092')
@@ -39,6 +41,11 @@ def kafka_client_id()->str:
     client_id = os.getenv('PROJECT_CLIENT_ID','mobile_money_client')
     client_id = str(client_id)
     return client_id
+
+def get_email_recipient()->str:
+    email_id = os.getenv('RECIPIENT','your_email')
+    email_id = str(email_id)
+    return email_id
 
 def get_message_interval_in_seconds()->int:
     message_interval_in_seconds = os.getenv('MESSAGE_INTERVAL',5)

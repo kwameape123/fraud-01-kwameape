@@ -63,7 +63,7 @@ def main(fast_mode=True):
     """
     Main producer loop writing CSV rows to Kafka Topic.
     """
-    logger.info("Starting file producer")
+    logger.info("Starting kafka producer")
     uc.verify_kafka_service()
     producer = up.create_kafka_producer()
     kafka_topic = uc.get_kafka_topic()

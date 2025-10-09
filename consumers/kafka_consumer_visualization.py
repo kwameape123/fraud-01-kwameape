@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 from kafka import KafkaConsumer
 from utils.utils_logger import logger
 import utils.utils_config as uc
+from dc_mailer import send_mail
 
 #####################################
 # DATA STRUCTURES
@@ -89,6 +90,20 @@ def update_chart():
 
 def process_message(message_dict):
     """Process a single transaction message from Kafka."""
+
+    account_number = message_dict.get("nameOrig")
+
+    title = "Mobile Money Fraud Alert"
+    content = f"Fraud has been detected for account:{account_number}"
+    recipient = uc.get_email_recipient()
+
+    # Email Alert system
+    try:
+        send_mail(subject=title, body=content, recipient=recipient)
+        print("SUCCESS: Email sent.")
+    except RuntimeError as e:
+        print(f"ERROR: Sending failed: {e}")
+    
     try:
         # Transaction type
         tx_type = message_dict.get("type_transaction", "unknown")
