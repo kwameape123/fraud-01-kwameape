@@ -10,8 +10,8 @@
 
 ## Notes
 This project has;
-1. Producers which write messages to a json file and kafka topic to simulate real world situations.
-2. Consumers which reads messages from a json file and kafka topic and then process these messages to create visualization as well as move them to a database. Visualization included a:
+1. Producers which write messages to a json file and kafka topic to simulate streaming real world mobile money transactions.
+2. Consumers which reads messages from a json file and kafka topic and then process these messages to create visualization and send email alerts when a fraudulent transaction is detected. Visualization included a:
     1. Bar charts to track the frequency fraudulent and non-fraudulent transactions.
     2. Line charts to track hourly revenue and hourly transaction amount. Revenue was assumed to be 2% of hourly transaction.
 3. Configuration files them configure producers and consumers.

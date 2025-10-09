@@ -1,4 +1,4 @@
-"""
+""" file_consumer_visualization.py
 This consumer reads JSON messages from mobile_money_transaction_live.json in real-time
 and updates live visualizations:
 1. Transaction counts by type

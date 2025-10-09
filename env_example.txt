@@ -1,0 +1,86 @@
+# Environment settings file (.env)
+
+# Purpose
+#  This file is used to define environment-specific variables for the application.
+#  Keeping configuration information out of code files enhances security and flexibility.
+#  Default values can be provided in the code if this file cannot be read.
+
+# How to Use
+#  1. Install the external package 'dotenv' into your virtual environment.
+#  2. Import the 'load_dotenv' function into your Python file.
+#  3. Call the 'load_dotenv()' function at the start of your application.
+
+# Python Example
+#  from dotenv import load_dotenv
+#  load_dotenv()
+
+# Maintain two versions of this file:
+#   1. .env
+#      - Actual values including sensitive data. Do NOT commit this file.
+#   2. .env.example
+#      - Template with all variable names, no secrets. Commit this file.
+
+# Naming Convention:
+#  - Use UPPER_CASE with UNDERSCORES.
+#  - No spaces or special characters.
+#  - Add units to numeric variable names (e.g., INTERVAL_SECONDS).
+
+# Environment Variables Defined Below
+
+# ============================
+# KAFKA BROKER SETTINGS
+# ============================
+
+# DEFAULT SETTINGS (Recommended for most users)
+# Use these settings if:
+# - You are running Kafka on the same machine as your Python code.
+# - Works with native Windows, macOS, Linux, WSL2, or Docker.
+
+# Uncomment and set if localhost option don't work:
+# KAFKA_BROKER_ADDRESS=127.0.0.1:9092
+
+# WSL Users (Windows Subsystem for Linux):
+# Use this if running Kafka inside WSL and Python in Windows.
+KAFKA_BROKER_ADDRESS=localhost:9092
+
+# ============================
+# KAFKA TOPIC SETTINGS
+# ============================
+
+# Kafka topic name (default: 'mobile_money')
+PROJECT_TOPIC=mobile_money
+
+# ============================
+# KAFKA CONSUMER GROUP ID SETTINGS
+# ============================
+PROJECT_CONSUMER_GROUP_ID=mobile_money_consumer_group_id
+
+# ============================
+# KAFKA CLIENT ID SETTINGS
+# ============================
+PROJECT_CLIENT_ID=mobile_money_client
+
+# ============================
+# MESSAGE INTERVAL SETTINGS
+# ============================
+MESSAGE_INTERVAL=5
+
+# ============================
+# PROJECT SETTINGS
+# ============================
+
+# Data Storage Configuration
+BASE_DATA_DIR=data
+LIVE_DATA_FILE_NAME=mobile_money_transaction_live.json
+
+# Database Configuration
+# Options: sqlite, postgres, mongodb
+# DATABASE_TYPE=sqlite
+
+# PostgreSQL database connection details
+# Used if DATABASE_TYPE is set to 'postgres'
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=postgres
+POSTGRES_USER=your_username
+POSTGRES_PASSWORD=your_password
