@@ -16,7 +16,7 @@ This project has;
     2. Line charts to track hourly revenue and hourly transaction amount. Revenue was assumed to be 2% of hourly transaction.
 3. Consumers which reads messages from a json file and kafka topic and then uploads processed messages to
 a PostgreSQL database.
-4. Configuration files that configure producers and consumers.
+4. Configuration files that configure producers and consumers. These can be found in the utils folder and the .env or .env.example file. Note that some environment variables in the .env or .env.example needs to be customize to your specific situation, meaning a unique database, username and password for PostgreSQL.
 5. A logger that helps to keep track of errors and how project modules function.
 
 **CSV data file was too large to be upload to GitHub via git, hence a link to download this file is https://www.kaggle.com/datasets/ealaxi/paysim1/data**
