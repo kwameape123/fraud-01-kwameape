@@ -14,19 +14,26 @@ This project has;
 2. Consumers which reads messages from a json file and kafka topic and then process these messages to create visualization and send email alerts when a fraudulent transaction is detected. Visualization included a:
     1. Bar charts to track the frequency fraudulent and non-fraudulent transactions.
     2. Line charts to track hourly revenue and hourly transaction amount. Revenue was assumed to be 2% of hourly transaction.
-3. Configuration files them configure producers and consumers.
-4. A logger that helps to keep track of errors and how project modules function.
+3. Consumers which reads messages from a json file and kafka topic and then uploads processed messages to
+a PostgreSQL database.
+4. Configuration files that configure producers and consumers.
+5. A logger that helps to keep track of errors and how project modules function.
 
 **CSV data file was too large to be upload to GitHub via git, hence a link to download this file is https://www.kaggle.com/datasets/ealaxi/paysim1/data**
+After downloading the data file from kaggle, make sure the name is **mobile_money_log.csv** to be consistent with the naming convention in the code.
 
 
 ## Project Execution.
 
 ### STEP 1: Verify tool installation and Setup
-1. VS Code.
-2. Python. Python 3.11 is required.
-3. Wsl and Kafka.
-4. PostgreSQL.
+In brackets are links to installation instructions for the various tools.
+1. VS Code (https://code.visualstudio.com/docs/setup/windows).
+2. Python. Python 3.11 is required (https://www.geeksforgeeks.org/python/how-to-install-python-on-windows/)
+(https://www.geeksforgeeks.org/python/download-and-install-python-3-latest-version/).
+3. Wsl and Kafka (https://learn.microsoft.com/en-us/windows/wsl/install).
+4. PostgreSQL (https://www.postgresql.org/docs/current/tutorial-install.html).
+
+
 
 ### STEP 2: INITIALIZE PROJECT
 Start a repository in **Github** for the project and then **clone** project to local machine to be 
